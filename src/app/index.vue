@@ -41,7 +41,6 @@ async function fetchResults() {
 async function searchPackages() {
   currentPage.value = 1;
   await fetchResults();
-  searchQuery.value = "";
 }
 
 const getPackagesList = (searchQuery: string, size: number, from: number) =>

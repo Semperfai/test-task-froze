@@ -22,10 +22,6 @@
   margin-bottom: 20px;
 }
 
-.search-field {
-  max-width: 40rem;
-}
-
 @media (max-width: 768px) {
   .title {
     font-size: 1em;

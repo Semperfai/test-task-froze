@@ -82,7 +82,7 @@ function loadMore() {
         <v-container>
           <h1 class="title">Discover Your Favorite Package</h1>
           <v-row
-            class="d-flex align-center justify-space-between pa-2 ma-4 ga-10"
+            class="d-flex align-center justify-start pa-2 ma-4 ga-10"
           >
             <v-text-field
               v-model="searchQuery"
@@ -131,7 +131,12 @@ function loadMore() {
     margin-bottom: 20px;
   }
 
+  .search-field {
+        max-width: 40rem;
+    }
+
   @media (max-width: 768px) {
+    
     .title {
       font-size: 1em;
       margin-bottom: 10px;

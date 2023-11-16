@@ -13,9 +13,9 @@ const props = defineProps<{
 const modalVisible = ref(false);
 const selectedItem = ref<IPackaItemDetails>();
 
-const openModal = (currentItem: any) => {
+const openModal = (currentItem: IPackaItemBase) => {
   selectedItem.value = props.itemsDetails.find(
-    (item) => currentItem.name === item.name
+    (item) => currentItem.name === item.name,
   );
   modalVisible.value = true;
 };

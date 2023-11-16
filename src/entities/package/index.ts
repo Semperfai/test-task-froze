@@ -1,2 +1,2 @@
-export * from './ui'
-export * as packageModel from './model'
+export * from "./ui";
+export * as packageModel from "./model";

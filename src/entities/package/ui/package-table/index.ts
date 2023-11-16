@@ -1,3 +1,3 @@
-import PackageTable from './index.vue'
+import PackageTable from "./index.vue";
 
-export { PackageTable }
+export { PackageTable };

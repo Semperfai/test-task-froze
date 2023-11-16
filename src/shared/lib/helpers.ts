@@ -1,7 +1,7 @@
 import { type IPackaItemBase, type IPackaItemDetails } from "../types";
 
 export const mapPackageListBaseInfo = (
-  packageList: any[]
+  packageList: any[],
 ): IPackaItemBase[] => {
   return packageList.map((item) => {
     return {
@@ -13,7 +13,7 @@ export const mapPackageListBaseInfo = (
 };
 
 export const mapPackageListDetailsInfo = (
-  packageList: any[]
+  packageList: any[],
 ): IPackaItemDetails[] => {
   return packageList.map((item) => {
     const packageInfo = item.package;

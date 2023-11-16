@@ -3,17 +3,15 @@ import { PackageTable } from "../entities/package/ui";
 import { BaseFooter } from "../shared/ui";
 import { TableEmptyState } from "../shared/ui";
 import { Spinner } from "../shared/ui";
+import { BaseLayout } from "../shared/ui";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { packageModel } from "../entities/package";
+import { MAX_PAGE_SIZE, MAX_FROM_TOTAL, INCREMENTAL_PAGE_SIZE } from "../shared/constants";
 import {
   mapPackageListBaseInfo,
   mapPackageListDetailsInfo,
 } from "../shared/lib/helpers";
-
-const MAX_PAGE_SIZE = 250;
-const MAX_FROM_TOTAL = 1000;
-
 const store = useStore();
 const pageSize = ref<number>(25);
 const currentPage = ref<number>(1);
@@ -30,8 +28,7 @@ const searchResults = ref([]);
 
 async function fetchResults() {
   if (searchQuery.value.length > 0) {
-    const from =
-      totalResults.value < MAX_FROM_TOTAL ? totalResults.value : MAX_FROM_TOTAL;
+    const from = totalResults.value < MAX_FROM_TOTAL ? totalResults.value : MAX_FROM_TOTAL;
     await getPackagesList(searchQuery.value, pageSize.value, from);
   } else {
     searchResults.value = [];
@@ -51,7 +48,7 @@ const getPackagesList = (searchQuery: string, size: number, from: number) =>
   });
 
 const isListLoading = computed(
-  () => store.state[packageModel.NAMESPACE].isListLoading
+  () => store.state[packageModel.NAMESPACE].isListLoading,
 );
 
 const packagesListBaseInfo = computed(() => {
@@ -70,7 +67,7 @@ function loadMore() {
   if (pageSize.value >= MAX_PAGE_SIZE) {
     pageSize.value = MAX_PAGE_SIZE;
   }
-  pageSize.value += 25;
+  pageSize.value += INCREMENTAL_PAGE_SIZE;
   fetchResults();
 }
 </script>
@@ -79,11 +76,9 @@ function loadMore() {
   <div class="app">
     <v-app>
       <v-container class="wrapper">
-        <v-container>
-          <h1 class="title">Discover Your Favorite Package</h1>
-          <v-row
-            class="d-flex align-center justify-start pa-2 ma-4 ga-10"
-          >
+        <base-layout>
+          <template #title> Discover Your Favorite Package </template>
+          <template #header>
             <v-text-field
               v-model="searchQuery"
               class="search-field"
@@ -97,20 +92,20 @@ function loadMore() {
               @click:append-inner="searchPackages"
             ></v-text-field>
             <v-btn @click="loadMore" :disabled="!hasMore"> Load More </v-btn>
-          </v-row>
-          <v-row class="justify-center">
-            <package-table
-              v-if="hasItems"
-              :items-details="packagesListBaseDetails"
-              :items="packagesListBaseInfo"
-            />
-            <spinner v-else-if="isListLoading" />
-            <table-empty-state v-else />
-          </v-row>
-          <v-row>
-            <base-footer />
-          </v-row>
-        </v-container>
+          </template>
+          <template #main>
+            <v-row class="justify-center">
+              <package-table
+                v-if="hasItems"
+                :items-details="packagesListBaseDetails"
+                :items="packagesListBaseInfo"
+              />
+              <spinner v-else-if="isListLoading" />
+              <table-empty-state v-else />
+            </v-row>
+          </template>
+          <template #footer> <base-footer /> </template>
+        </base-layout>
       </v-container>
     </v-app>
   </div>
@@ -123,24 +118,5 @@ function loadMore() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  .title {
-    color: #4285f4;
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .search-field {
-        max-width: 40rem;
-    }
-
-  @media (max-width: 768px) {
-    
-    .title {
-      font-size: 1em;
-      margin-bottom: 10px;
-    }
-  }
 }
 </style>

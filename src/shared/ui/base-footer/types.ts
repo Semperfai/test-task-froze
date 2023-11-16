@@ -1,4 +1,4 @@
 export interface IFooterItem {
-    icon: string;
-    link: string;
+  icon: string;
+  link: string;
 }

@@ -119,4 +119,9 @@ function loadMore() {
   align-items: center;
   justify-content: center;
 }
+
+.search-field {
+  max-width: 40rem;
+}
+
 </style>

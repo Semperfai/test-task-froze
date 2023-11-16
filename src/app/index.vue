@@ -32,7 +32,7 @@ async function fetchResults() {
   if (searchQuery.value.length > 0) {
     const from =
       totalResults.value < MAX_FROM_TOTAL ? totalResults.value : MAX_FROM_TOTAL;
-    await getTasksListAsync(searchQuery.value, pageSize.value, from);
+    await getPackagesList(searchQuery.value, pageSize.value, from);
   } else {
     searchResults.value = [];
   }
@@ -41,9 +41,10 @@ async function fetchResults() {
 async function searchPackages() {
   currentPage.value = 1;
   await fetchResults();
+  searchQuery.value = "";
 }
 
-const getTasksListAsync = (searchQuery: string, size: number, from: number) =>
+const getPackagesList = (searchQuery: string, size: number, from: number) =>
   store.dispatch(packageModel.actions.getPackagesListAsync, {
     q: searchQuery,
     size,
